@@ -140,5 +140,35 @@ class AirLineReviewCollector(SkyThoughtCollector):
         return (stat, over_all, money_value, seat_comfort,
         staff_service, catering, entertainment, recomend)
         
-        
+    def collectThoughts(self):
+ 	#print "Collecting Thoughts"
+ 	for al in AirLineReviewCollector.airlines:
+ 		count = 0
+ 		while count < AirLineReviewCollector.limit:
+ 			count = count + 1
+			url = ''
+		if count == 1:
+ 			url = AirLineReviewCollector.
+			baseURl + al + ".htm"
+ 		else:
+ 			url = AirLineReviewCollector.
+			baseURl + al + "_"+str(count)+ ".htm"
+		
+		soup = BeautifulSoup.BeautifulSoup
+		(super(AirLineReviewCollector,self).downloadURL(url))
+ 		blogs = soup.findAll("p",{"class":"text2"})
+ 		tables = soup.findAll("table", {"width":"192"})
+ 		review_headers = soup.findAll("td", {"class":"airport"})
+ 
+		for i in range(len(tables)-1):
+			(name, surname, year, month,date, country) = self.parse
+			SoupHeader(review_headers[i])
+ 			(stat, over_all, money_value, seat_comfort, staff_service, catering, entertainment,
+			recomend) = self.parseSoup
+			Table(tables[i])
+ 			blog = str(blogs[i]).split(">")[1].split("<")[0]
+ 			args = [al, name, surname,year, month, date, country,stat, over_all, money_value,
+				seat_comfort, staff_service, catering, entertainment,recomend, blog]
+			super(AirLineReviewCollector,self).print_args(args)
+
         
